@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using PokemonReviewApp.Dto;
 using PokemonReviewApp.Interfaces;
 using PokemonReviewApp.Models;
-using PokemonReviewApp.Repository;
 
 namespace PokemonReviewApp.Controllers
 {
@@ -12,9 +11,9 @@ namespace PokemonReviewApp.Controllers
     public class CategoryController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;
-        private readonly Mapper _mapper;
+        private readonly IMapper _mapper;
 
-        public CategoryController(ICategoryRepository categoryRepository, Mapper mapper)
+        public CategoryController(ICategoryRepository categoryRepository, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
             _mapper = mapper;
@@ -22,7 +21,7 @@ namespace PokemonReviewApp.Controllers
 
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Category>))]
-        public IActionResult GetCategory()
+        public IActionResult GetCategories()
         {
             var categories = _mapper.Map<List<CategoryDto>>(_categoryRepository.GetCategories());
 
@@ -61,6 +60,9 @@ namespace PokemonReviewApp.Controllers
 
             return Ok(pokemons);
         }
-    }
 
+
+
+
+    }
 }
